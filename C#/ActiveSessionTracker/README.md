@@ -1,5 +1,8 @@
 # ActiveSessionTracker
 
+## WARNING
+The setup does not check to see if Sessions and stuff are in place! This will be fixed soon, but right now it says BOOM if you don't add the right ingridients to the ServiceCollection.
+
 ## Target
 ASP.Net Core projects that use Razor-pages.
 
