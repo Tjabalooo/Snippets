@@ -83,7 +83,19 @@ namespace TJL.ActiveSessionTracker
         public void UpdateCurrentSession()
         {
             var httpContextAccessor = (IHttpContextAccessor)_services.GetService(typeof(IHttpContextAccessor));
-            var session = httpContextAccessor.HttpContext.Session;
+            
+            if (httpContextAccessor == null)
+                throw new Exception("IHttpContextAccessor must be configured. Add 'services.AddHttpContextAccessor()' to Startup.Configuration.");
+
+            ISession session = null;
+            try
+            {
+                session = httpContextAccessor.HttpContext.Session;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("ISession must be configured. Add 'services.AddSession()' to Startup.Configuration and 'app.UseSession()' to Startup.Configure.", exception);
+            }
 
             string sessionId = session.GetString(SessionKeys.SessionId);
             if (sessionId == null)

@@ -1,8 +1,5 @@
 # ActiveSessionTracker
 
-## WARNING
-The setup does not check to see if Sessions and stuff are in place! This will be fixed soon, but right now it says BOOM if you don't add the right ingridients to the ServiceCollection.
-
 ## Target
 ASP.Net Core projects that use Razor-pages.
 
@@ -11,13 +8,23 @@ Code that keeps track of how many uniqe HttpContext-sessions are being used to f
 
 ## How
 ##### startup.cs
-Add *IActiveSessionTracker* by using the extension method provided. The timeout given will be used when deciding if sessions are active or not.
+Add *IActiveSessionTracker* by using the extension method provided. The timeout given will be used when deciding if sessions are active or not. IHttpContextAccessor and ISession are used by the tracker and forgetting to configure these will result in exceptions telling you to configure them.
 ```C#
 public void ConfigureServices(IServiceCollection services)
 {
-    ...
-    services.AddActiveSessionTracker(5000);
-    ...
+   ...
+   services.AddHttpContextAccessor();
+   services.AddSession();
+   ...
+   services.AddActiveSessionTracker(5000);
+   ...
+}
+
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+   ...
+   app.UseSession();
+   ...
 }
 ```
 ##### _Layout.cshtml
