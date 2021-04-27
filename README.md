@@ -1,6 +1,6 @@
 # Snippets
 
-This is Tjabalooo's collection of reusable code. If you find it here it is written by me.
+This is Tjabalooo's collection of reusable code.
 
 ### Content
 
